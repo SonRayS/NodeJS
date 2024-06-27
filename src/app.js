@@ -6,27 +6,19 @@ const LocalIp = "http://127.0.0.1";
 const server = http.createServer((req, res) => {
     const url = new URL(req.url, LocalIp);
     const userName = url.searchParams.get("hello");
-    console.log(url);
-    console.log(url.searchParams);
-    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaa", userName);
+    console.log(URLSearchParams);
 
-    if (userName) {
-        res.statusCode = 200;
-        res.statusMessage = "ok";
-        res.setHeader("Content-Type", "text/plain");
-        res.write(`Hello, ${req.url}! req: ${res.statusCode}`);
-        res.end();
-        return;
+    function checkUser({ date }) {
+        const info = date;
+        const findInfo = info.indexOf("/info");
+        if (findInfo >= 0) {
+            return req.url;
+        } else {
+            return "/?hallo";
+        }
     }
-    switch (req.url) {
-        case "/users":
-            res.statusCode = 200;
-            res.statusMessage = "OK";
-            res.setHeader("Content-Type", "application/json");
-            res.write(getUsers());
-            res.end();
-            break;
 
+    switch (req.url) {
         case "/?hello":
             res.statusCode = 400;
             res.statusMessage = "Bad Request";
@@ -43,6 +35,22 @@ const server = http.createServer((req, res) => {
             res.end();
             break;
 
+        case checkUser({ date: req.url }):
+            res.statusCode = 200;
+            res.statusMessage = "OK";
+            res.setHeader("Content-Type", "application/json");
+            res.write(getUsers());
+            res.end();
+            break;
+
+        case req.url:
+            res.statusCode = 200;
+            res.statusMessage = "ok";
+            res.setHeader("Content-Type", "text/plain");
+            res.write(`Hello, ${req.url}! req: ${res.statusCode}`);
+            res.end();
+            break;
+
         default:
             res.statusCode = 500;
             res.statusMessage = "Internal Server Error";
@@ -51,7 +59,7 @@ const server = http.createServer((req, res) => {
 .............)_)...)_)...)_)\n 
 ............)___).)___).)___)\n 
 ...........)____).)____).)____)\n 
-.......(_*_)___|______|______|_______ ERORR :C\n
+.......(_*_)___|______|______|_______ ${req.url} ERORR :C\n
 .........(_______________________/`);
             res.end();
             break;
