@@ -18,6 +18,30 @@ const server = http.createServer((req, res) => {
         }
     }
 
+    const arrUsers = [
+        {
+            id: 1,
+            name: "/Ivan",
+        },
+        {
+            id: 2,
+            name: "/Igor",
+        },
+        {
+            id: 3,
+            name: "/Ismail",
+        },
+    ];
+
+    function saveUserName({ name }) {
+        const find = arrUsers.find(({ name }) => name === req.url);
+        if (find) {
+            return req.url;
+        } else {
+            res.statusCode = 500;
+        }
+    }
+
     switch (req.url) {
         case "/?hello":
             res.statusCode = 400;
@@ -43,7 +67,7 @@ const server = http.createServer((req, res) => {
             res.end();
             break;
 
-        case req.url:
+        case saveUserName({ name: req.url }):
             res.statusCode = 200;
             res.statusMessage = "ok";
             res.setHeader("Content-Type", "text/plain");
