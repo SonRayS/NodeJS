@@ -1,99 +1,33 @@
-const getUsers = require("./modules/users");
-const http = require("http");
-const port = 3003;
-const LocalIp = "http://127.0.0.1";
+const express = require("express");
+const dotenv = require("dotenv");
+const cors = require("cors");
+const userRouter = require("./routes/users");
+const loggerOne = require("./middlewares/loggerOne");
+const bodyParser = require("body-parser");
 
-const server = http.createServer((req, res) => {
-    const url = new URL(req.url, LocalIp);
-    const userName = url.searchParams.get("hello");
-    console.log(URLSearchParams);
+dotenv.config();
+const app = express();
+/* ------------------------------------------------------------------------- */
+const { PORT = 3000, API_URL = "http://127.0.0.1" } = process.env;
+/* ------------------------------------------------------------------------- */
+const helloWorld = (request, response) => {
+    response.status(200);
+    response.send("Hello world");
+};
+app.use(cors());
+app.use(loggerOne);
+app.use(bodyParser.json());
 
-    function checkUser({ date }) {
-        const info = date;
-        const findInfo = info.indexOf("/info");
-        if (findInfo >= 0) {
-            return req.url;
-        } else {
-            return "/?hallo";
-        }
-    }
+app.get("/", helloWorld);
 
-    const arrUsers = [
-        {
-            id: 1,
-            name: "/Ivan",
-        },
-        {
-            id: 2,
-            name: "/Igor",
-        },
-        {
-            id: 3,
-            name: "/Ismail",
-        },
-        {
-            id: 4,
-            name: "/Jess",
-        },
-    ];
-
-    function saveUserName({ name }) {
-        const find = arrUsers.find(({ name }) => name === req.url);
-        if (find) {
-            return req.url;
-        } else {
-            res.statusCode = 500;
-        }
-    }
-
-    switch (req.url) {
-        case "/?hello":
-            res.statusCode = 400;
-            res.statusMessage = "Bad Request";
-            res.setHeader("Content-Type", "text/plain");
-            res.write(`Enter a name`);
-            res.end();
-            break;
-
-        case "/":
-            res.statusCode = 200;
-            res.statusMessage = "OK";
-            res.setHeader("Content-Type", "text/plain");
-            res.write(`Hello world`);
-            res.end();
-            break;
-
-        case checkUser({ date: req.url }):
-            res.statusCode = 200;
-            res.statusMessage = "OK";
-            res.setHeader("Content-Type", "application/json");
-            res.write(getUsers());
-            res.end();
-            break;
-
-        case saveUserName({ name: req.url }):
-            res.statusCode = 200;
-            res.statusMessage = "ok";
-            res.setHeader("Content-Type", "text/plain");
-            res.write(`Hello, ${req.url}! req: ${res.statusCode}`);
-            res.end();
-            break;
-
-        default:
-            res.statusCode = 500;
-            res.statusMessage = "Internal Server Error";
-            res.setHeader("Content-Type", "text/plain");
-            res.write(`..............|.....|.....|\n
-.............)_)...)_)...)_)\n 
-............)___).)___).)___)\n 
-...........)____).)____).)____)\n 
-.......(_*_)___|______|______|_______ ${req.url} ERORR :C\n
-.........(_______________________/`);
-            res.end();
-            break;
-    }
+app.post("/", (request, response) => {
+    response.status(200);
+    response.send("Hello POST");
 });
-
-server.listen(port, () => {
-    console.log(`Server port:${LocalIp}:${port}/`);
+/* ------------------------------------------------------------------------- */
+app.use(userRouter);
+/* ------------------------------------------------------------------------- */
+app.listen(PORT, () => {
+    console.log(`Сервер запущен по адресу: ${API_URL}:${PORT} `);
 });
+/* ------------------------------------------------------------------------- */
