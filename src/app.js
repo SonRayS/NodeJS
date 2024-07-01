@@ -13,15 +13,12 @@ const app = express();
 const {
     PORT = 3005,
     API_URL = "http://127.0.0.1",
-    MONGO_URL = "mongodb://127.0.0.1:27017/library/",
+    MONGO_URL = "mongodb://127.0.0.1:27017/library",
 } = process.env;
 
-mongoose
-    .connect(MONGO_URL)
-    .then((response) => console.log(response, "Connect to MongoLibrary"))
-    .catch((err) => {
-        console.log("Connect to MongoLibrary", err);
-    });
+mongoose.connect(MONGO_URL).catch((err) => {
+    console.log("Connect to MongoLibrary", err);
+});
 
 const helloWorld = (request, response) => {
     response.status(200);
