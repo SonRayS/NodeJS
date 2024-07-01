@@ -17,11 +17,12 @@ const {
 
 router.use(loggerTwo);
 /* --------------------------LIBRARY-------------------------- */
-router.get("/library", getLibrary);
+router.get("/", getLibrary);
 /* --------------------------LIBRARY-------------------------- */
 
 /* --------------------------USER-------------------------- */
 router.get("/library/users", getUsers);
+router.get("/library/create_user", createUser);
 router.get("/library/users/:user_id", getUser);
 /* --------------------------USER-------------------------- */
 
