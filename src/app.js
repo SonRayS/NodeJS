@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const userRouter = require("./routes/users");
-const loggerOne = require("./middlewares/loggerOne");
 
 dotenv.config();
 
@@ -20,21 +19,9 @@ mongoose.connect(MONGO_URL).catch((err) => {
     console.log("Connect to MongoLibrary", err);
 });
 
-const helloWorld = (request, response) => {
-    response.status(200);
-    response.send("Hello world");
-};
-
 app.use(cors());
-app.use(loggerOne);
+
 app.use(bodyParser.json());
-
-app.get("/", helloWorld);
-
-app.post("/", (request, response) => {
-    response.status(200);
-    response.send("Hello POST");
-});
 
 app.use(userRouter);
 
