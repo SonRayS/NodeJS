@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const loggerTwo = require("../middlewares/loggerTwo");
+const loggerOriginalUrl = require("../middlewares/loggerOriginalUrl");
 const {
     getUsers,
     getUser,
@@ -16,7 +16,7 @@ const {
 } = require("../controllers/users");
 
 /* -------------------------USER------------------------- */
-router.use(loggerTwo);
+router.use(loggerOriginalUrl);
 router.get("/", getInfo);
 router.get("/library", getLibrary);
 router.get("/library/users", getUsers);
