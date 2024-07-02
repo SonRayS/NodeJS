@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Book = require("../models/book");
 
 const getInfo = (request, response) => {
     response.status(200);
@@ -39,6 +40,7 @@ const createUser = (request, response) => {
 
 const updateUser = (request, response) => {
     const { user_id } = request.params;
+
     return User.findByIdAndUpdate(user_id, { ...request.body })
         .then((user) => {
             response.status(200).send(user);
@@ -48,28 +50,63 @@ const updateUser = (request, response) => {
 
 const deleteUser = (request, response) => {
     const { user_id } = request.params;
+
     return User.findByIdAndDelete(user_id)
         .then((user) => {
-            response.status(200).send(user);
+            response
+                .status(200)
+                .send(`${user} - Account deleted successfully `);
         })
         .catch((err) => response.status(500).send(err.message));
 };
 
-/* const getListBooks = (request, response) => {};
-
-const postAddBook = (request, response) => {
-    response.status(200);
-    response.send(request.body);
+const getListBooks = (request, response) => {
+    return Book.find({})
+        .then((data) => {
+            response.status(200).send(data);
+        })
+        .catch((err) => response.status(500).send(err.message));
 };
 
-const putAddIdBook = (request, response) => {};
+const postAddBook = (request, response) => {
+    return Book.create({ ...request.body })
+        .then((book) => {
+            response.status(201).send(book);
+        })
+        .catch((err) => response.status(500).send(err.message));
+};
 
-const getMyBooks = (request, response) => {};
+const getBookId = (request, response) => {
+    const { book_id } = request.params;
+    return Book.findById(book_id)
+        .then((book) => {
+            response
+                .status(200)
+                .send(book ? book : "Book with this name not found");
+        })
+        .catch((err) => response.status(500).send(err.message));
+};
 
-const postDeleteMyBook = (request, response) => {};
+const updateBook = (request, response) => {
+    const { book_id } = request.params;
 
-const deleteMyBookId = (request, response) => {};
- */
+    return Book.findByIdAndUpdate(book_id, { ...request.body })
+        .then((book) => {
+            response.status(200).send(book);
+        })
+        .catch((err) => response.status(500).send(err.message));
+};
+
+const deleteBookId = (request, response) => {
+    const { book_id } = request.params;
+
+    return Book.findByIdAndDelete(book_id)
+        .then((book) => {
+            response.status(200).send(book);
+        })
+        .catch((err) => response.status(500).send(err.message));
+};
+
 module.exports = {
     getInfo,
     getLibrary,
@@ -78,10 +115,9 @@ module.exports = {
     createUser,
     updateUser,
     deleteUser,
-    /*  getListBooks, */
-    /*    postAddBook, */
-    /*     putAddIdBook, */
-    /*     getMyBooks, */
-    /*     postDeleteMyBook, */
-    /*     deleteMyBookId, */
+    postAddBook,
+    getListBooks,
+    getBookId,
+    updateBook,
+    deleteBookId,
 };
