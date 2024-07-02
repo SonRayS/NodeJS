@@ -1,5 +1,5 @@
 const loggerOriginalUrl = (request, response, next) => {
-    console.log(request.url, response.status_code);
+    console.log(request.url);
     next();
 };
 
