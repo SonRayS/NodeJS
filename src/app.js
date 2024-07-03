@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const userRouter = require("./routes/users");
+const bookRouter = require("./routes/books");
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.use(userRouter);
+app.use(bookRouter);
 
 app.listen(PORT, () => {
     console.log(`Сервер запущен по адресу: ${API_URL}:${PORT} `);
