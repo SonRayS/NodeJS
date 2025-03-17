@@ -1,21 +1,18 @@
-# API для библиотеки
+## Library API
 
-Это проект CRUD API для управления пользователями и их книгами, реализованный на Node.js и MongoDB.
+This is a CRUD API project for managing users and their books, implemented in Node.js and MongoDB.
 
-## Описание
+## Description
 
-Этот проект представляет собой серверное приложение, которое позволяет выполнять операции CRUD (создание, чтение, обновление и удаление) с данными о пользователях и книгах. Для создания API использованы такие технологии, как Express.js и MongoDB. 
+This project is a server-side application that allows you to perform CRUD operations (create, read, update and delete) on user and book data. Technologies such as Express.js and MongoDB are used to create the API. 
 
-## Технологии
+## Technologies
 
-- **Node.js**: среда выполнения для серверного JavaScript.
-- **Express.js**: фреймворк для создания веб-приложений на Node.js.
-- **MongoDB**: база данных NoSQL для хранения данных.
-- **Mongoose**: библиотека для работы с MongoDB в Node.js.
-- **dotenv**: модуль для загрузки переменных окружения из `.env` файла.
-- **body-parser**: middleware для обработки тела запросов.
-- **cors**: middleware для настройки политики кросс-доменных запросов.
-- **nodemon**: утилита для автоматического перезапуска приложения при изменении файлов.
-
-
-
+- **Node.js**: a runtime environment for server-side JavaScript.
+- **Express.js**: a framework for building web applications on Node.js.
+- **MongoDB**: a NoSQL database for storing data.
+- **Mongoose**: a library for working with MongoDB in Node.js.
+- **dotenv**: module to load environment variables from `.env` file.
+- **body-parser**: middleware for handling query bodies.
+- **cors**: middleware for configuring cross-domain query policy.
+- **nodemon**: a utility to automatically restart an application when files are changed.
